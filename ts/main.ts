@@ -1,3 +1,6 @@
-import { test } from "./services/test.service";
+import { CreateRenderService, RenderService } from "./services/render.service";
 
-console.log(test());
+window.addEventListener('load', () => {
+    const service: RenderService = CreateRenderService();
+    service.DrawSprite();
+});
