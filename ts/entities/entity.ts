@@ -1,10 +1,7 @@
 import { Component } from "./components/component";
-import { PlayerDirectorComponent } from "./components/director.component";
 
-export class Entity {
-    public components: Component[] = [
-        new PlayerDirectorComponent(),
-    ];
+export abstract class Entity {
+    public abstract components: Component[];
 
     public x: number = 0;
     public y: number = 0;

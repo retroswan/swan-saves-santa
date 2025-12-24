@@ -30,7 +30,7 @@ export abstract class DirectorComponent implements Component {
 
 export class GoombaDirectorComponent extends DirectorComponent {
     protected override stateLogic(): void {
-        this.state.set(Action.MoveRight, true);
+        this.state.set(Action.MoveLeft, true);
     }
 }
 
