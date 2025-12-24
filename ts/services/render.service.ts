@@ -1,6 +1,15 @@
+export interface DrawSpriteData {
+    texture: HTMLImageElement,
+    flipped: boolean;
+    frameX: number;
+    frameY: number;
+    tileWidth: number;
+    tileHeight: number;
+}
+
 export interface RenderService {
     Clear(): void;
-    DrawSprite(x: number, y: number): void;
+    DrawSprite(x: number, y: number, data: DrawSpriteData): void;
 }
 
 let renderService: RenderService;
@@ -44,15 +53,34 @@ class CanvasRenderService implements RenderService {
 
     public Clear(): void {
         this.ctx.clearRect(
-        0,
-        0,
-        this.canvas.width,
-        this.canvas.height,
+            0,
+            0,
+            this.canvas.width,
+            this.canvas.height,
         );
     }
 
-    public DrawSprite(x: number, y: number): void {
-        this.ctx.fillStyle = '#f0F';
-        this.ctx.fillRect(x, y, 32, 32);
+    public DrawSprite(x: number, y:number, data: DrawSpriteData): void {
+        let mult: number = 1;
+        if (data.flipped) {
+            this.ctx.scale(-1, 1);
+            mult = -1;
+        }
+
+        this.ctx.drawImage(
+            data.texture,
+            1 + (data.frameX * (data.tileWidth + 1)),
+            1 + (data.frameY * (data.tileHeight + 1)),
+            data.tileWidth,
+            data.tileHeight,
+            (x * mult) - (mult < 0 ? data.tileWidth : 0),
+            y,
+            data.tileWidth,
+            data.tileHeight,
+        );
+
+        if (data.flipped) {
+            this.ctx.scale(-1, 1);
+        }
     }
 }

@@ -1,5 +1,6 @@
 import { Entity } from "../entities/entity";
 import { TestScene } from "../scenes/test.scene";
+import { AssetsService, CreateAssetsService } from "../services/assets.service";
 import { Action, CreateInputService, InputService } from "../services/input.service";
 import { CreateRenderService, RenderService } from "../services/render.service";
 import { Scene } from "./scene";
@@ -11,9 +12,14 @@ export class Game {
     private scene: Scene = TestScene;
 
     public constructor(
+        private assetsService: AssetsService = CreateAssetsService(),
         private inputService: InputService = CreateInputService(),
         private renderService: RenderService = CreateRenderService(),
-    ) {
+    ) {}
+
+    public async Init() {
+        await this.assetsService.Init();
+
         requestAnimationFrame((timestamp) => {
             this.start = timestamp;
 
@@ -49,10 +55,7 @@ export class Game {
         this.renderService.Clear();
 
         for (const entity of this.entities) {
-            this.renderService.DrawSprite(
-                entity.x,
-                entity.y,
-            );
+            entity.Draw(this.renderService);
         }
     }
 }

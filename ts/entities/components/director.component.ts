@@ -10,10 +10,12 @@ export abstract class DirectorComponent implements Component {
 
         if (this.state.get(Action.MoveRight)) {
             entity.x++;
+            entity.renderData.flipped = false;
         }
 
         if (this.state.get(Action.MoveLeft)) {
             entity.x--;
+            entity.renderData.flipped = true;
         }
 
         if (this.state.get(Action.MoveDown)) {
