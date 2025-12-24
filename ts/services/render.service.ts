@@ -3,8 +3,14 @@ export interface RenderService {
     DrawSprite(x: number, y: number): void;
 }
 
+let renderService: RenderService;
+
 export function CreateRenderService(): RenderService {
-    return new CanvasRenderService();
+    if (!renderService) {
+        renderService = new CanvasRenderService();
+    }
+
+    return renderService;
 }
 
 class CanvasRenderService implements RenderService {

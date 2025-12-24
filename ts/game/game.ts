@@ -1,17 +1,19 @@
 import { Entity } from "../entities/entity";
 import { TestScene } from "../scenes/test.scene";
+import { Action, CreateInputService, InputService } from "../services/input.service";
 import { CreateRenderService, RenderService } from "../services/render.service";
+import { Scene } from "./scene";
 
 export class Game {
     private start;
 
     private entities: Entity[] = [];
+    private scene: Scene = TestScene;
 
     public constructor(
+        private inputService: InputService = CreateInputService(),
         private renderService: RenderService = CreateRenderService(),
     ) {
-        this.entities = TestScene();
-
         requestAnimationFrame((timestamp) => {
             this.start = timestamp;
 
@@ -20,6 +22,11 @@ export class Game {
     }
 
     private frame(step): void {
+        if (this.scene != null) {
+            this.entities = this.scene();
+            this.scene = null;
+        }
+
         this.Update();
         this.Draw();
 
@@ -32,9 +39,24 @@ export class Game {
 
     public Update(): void {
         for (const entity of this.entities) {
-            entity.x = Math.random() * 1;
-            entity.y = Math.random() * 1;
+            if (this.inputService.Get(Action.MoveRight)) {
+                entity.x++;
+            }
+
+            if (this.inputService.Get(Action.MoveLeft)) {
+                entity.x--;
+            }
+
+            if (this.inputService.Get(Action.MoveDown)) {
+                entity.y++;
+            }
+
+            if (this.inputService.Get(Action.MoveUp)) {
+                entity.y--;
+            }
         }
+
+        this.inputService.Update();
     }
 
     public Draw(): void {

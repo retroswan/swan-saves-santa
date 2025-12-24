@@ -1,7 +1,6 @@
 import { Entity } from "../entities/entity";
-import { Scene } from "../game/scene";
 
-export const TestScene: Scene = (): Entity[] => {
+export function TestScene(): Entity[] {
     return [
         new Entity(),
     ];
