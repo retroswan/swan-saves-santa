@@ -39,21 +39,7 @@ export class Game {
 
     public Update(): void {
         for (const entity of this.entities) {
-            if (this.inputService.Get(Action.MoveRight)) {
-                entity.x++;
-            }
-
-            if (this.inputService.Get(Action.MoveLeft)) {
-                entity.x--;
-            }
-
-            if (this.inputService.Get(Action.MoveDown)) {
-                entity.y++;
-            }
-
-            if (this.inputService.Get(Action.MoveUp)) {
-                entity.y--;
-            }
+            entity.Update();
         }
 
         this.inputService.Update();
