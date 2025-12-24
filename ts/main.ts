@@ -1,6 +1,5 @@
-import { CreateRenderService, RenderService } from "./services/render.service";
+import { Game } from "./game/game";
 
 window.addEventListener('load', () => {
-    const service: RenderService = CreateRenderService();
-    service.DrawSprite();
+    const game: Game = new Game();
 });

@@ -1,6 +1,6 @@
 export interface RenderService {
     Clear(): void;
-    DrawSprite(/**/): void;
+    DrawSprite(x: number, y: number): void;
 }
 
 export function CreateRenderService(): RenderService {
@@ -45,8 +45,8 @@ class CanvasRenderService implements RenderService {
         );
     }
 
-    public DrawSprite(): void {
+    public DrawSprite(x: number, y: number): void {
         this.ctx.fillStyle = '#f0F';
-        this.ctx.fillRect(0, 0, 32, 32);
+        this.ctx.fillRect(x, y, 32, 32);
     }
 }
